@@ -20,7 +20,7 @@
       "credentials": {
         "telegramApi": {
           "id": "lahgaBq0bQO8KPNG",
-          "name": "Привет от ЮТ ИИздец :)"
+          "name": "Привет"
         }
       }
     },
@@ -110,7 +110,7 @@
       "credentials": {
         "telegramApi": {
           "id": "lahgaBq0bQO8KPNG",
-          "name": "Привет от ЮТ ИИздец :)"
+          "name": "Привет1"
         }
       }
     },
@@ -131,7 +131,7 @@
       "credentials": {
         "telegramApi": {
           "id": "lahgaBq0bQO8KPNG",
-          "name": "Привет от ЮТ ИИздец :)"
+          "name": "Привет2"
         }
       }
     },
@@ -664,7 +664,7 @@
       "createdAt": "2025-03-24T18:49:58.052Z",
       "updatedAt": "2025-03-24T18:49:58.052Z",
       "id": "R76d5UNKY6Gze2Ki",
-      "name": "ИИздец"
+      "name": "LunadLa"
     }
   ]
 }
