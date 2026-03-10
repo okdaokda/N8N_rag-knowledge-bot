@@ -1,0 +1,289 @@
+{
+  "name": "LOADING 2",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c9495dd4-0e40-43f7-9c04-94f05d624804",
+              "name": "category",
+              "value": "knowledge",
+              "type": "string"
+            },
+            {
+              "id": "99533e57-20fd-4a8f-884e-09b7a96c3132",
+              "name": "file_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a8e91646-0c6a-4af8-b165-65efde0de499",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.file_id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf",
+              "drawingsToFormat": "application/pdf",
+              "slidesToFormat": "application/pdf",
+              "sheetsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "id": "93b60e96-8cd0-4e9d-8bca-fe3e0c16e925",
+      "name": "Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1160,
+        -20
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ZlDCz0VvVN3ymohj",
+          "name": "привет от ЮТ ИИздец :)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chunkSize": 800,
+        "chunkOverlap": 150,
+        "options": {}
+      },
+      "id": "bacc1d36-fd92-4264-9bb3-75879a71b309",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a94f06ac-8d9f-436f-ac29-68a735b9b100",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        1640,
+        180
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "qnqNGr4J1V43pQi6",
+          "name": "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "2f127f8f-6000-46a9-a814-cb87659b19ec",
+      "name": "ЗАГРУЗКА В БД",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "756650da-e1a4-4793-8ecb-3a20bd208cd6",
+      "name": "БАЗА ДАННЫХ",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        -20
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "DauvANnAuHBN382P",
+          "name": "Supabase Documents"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1R_xbotCj3Jg2yeNL5VfWnz0DpNobdnv9",
+          "mode": "list",
+          "cachedResultName": "N8N",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1R_xbotCj3Jg2yeNL5VfWnz0DpNobdnv9"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "82c77547-1d44-4e28-82d3-1c01c581208b",
+      "name": "File Created Trigger",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        600,
+        -20
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "ZlDCz0VvVN3ymohj",
+          "name": "Google "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "df63b80e-7c0f-4101-a1f2-f25eae661f0f",
+      "name": "Extract PDF",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        -20
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "ЗАГРУЗКА В БД",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "БАЗА ДАННЫХ",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ЗАГРУЗКА В БД": {
+      "ai_document": [
+        [
+          {
+            "node": "БАЗА ДАННЫХ",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Created Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract PDF": {
+      "main": [
+        [
+          {
+            "node": "БАЗА ДАННЫХ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e33b2f33-3296-42f5-94cf-54ee3f0bb232",
+  "meta": {
+    "instanceId": "03e94f23f7822a7463cef39c630d67241aefb5250efc640a947ddbf069e7bead"
+  },
+  "id": "3LSJXl8QpteEtBpz",
+  "tags": [
+    {
+      "createdAt": "2025-03-24T18:49:58.052Z",
+      "updatedAt": "2025-03-24T18:49:58.052Z",
+      "id": "R76d5UNKY6Gze2Ki",
+      "name": "ИИздец"
+    }
+  ]
+}
